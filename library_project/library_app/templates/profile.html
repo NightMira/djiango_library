@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Личный кабинет</h2>
+
+<p>ФИО: {{ user.full_name }}</p>
+<p>Логин: {{ user.username }}</p>
+<p>Email: {{ user.email }}</p>
+<p>Телефон: {{ user.phone }}</p>
+<p>Роль: {{ user.role }}</p>
+<p>Дата регистрации: {{ user.date_reg }}</p>
+
+<h4>Мои книги</h4>
+
+<table class="table table-striped">
+<tr>
+    <th>Книга</th>
+    <th>Срок возврата</th>
+</tr>
+
+{% for loan in loans %}
+<tr>
+    <td>{{ loan.book.title }}</td>
+    <td>{{ loan.due_date }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

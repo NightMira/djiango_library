@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Панель библиотекаря</h3>
+
+<div class="card p-3 mb-4 shadow-sm">
+
+<h5>Выдать книгу</h5>
+
+<form method="post" action="/librarian/issue/">
+    {% csrf_token %}
+    <input name="member_id" class="form-control mb-2" placeholder="ID читателя">
+    <input name="isbn" class="form-control mb-2" placeholder="ISBN книги">
+    <button class="btn btn-success">Выдать</button>
+</form>
+
+</div>
+
+<h5>Все выдачи</h5>
+
+<table class="table table-bordered">
+<tr>
+    <th>Книга</th>
+    <th>Читатель</th>
+    <th>Срок</th>
+    <th>Возврат</th>
+    <th></th>
+</tr>
+
+{% for loan in loans %}
+<tr>
+    <td>{{ loan.book.title }}</td>
+    <td>{{ loan.member.full_name }}</td>
+    <td>{{ loan.due_date }}</td>
+    <td>{{ loan.return_date|default:"—" }}</td>
+    <td>
+        {% if not loan.return_date %}
+        <a href="/librarian/return/{{ loan.id }}/" class="btn btn-warning btn-sm">
+            Принять
+        </a>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}

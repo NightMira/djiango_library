@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="card p-4 shadow-sm">
+
+<h3>{{ book.title }}</h3>
+
+<ul class="list-group mb-3">
+    <li class="list-group-item">Автор: {{ book.author }}</li>
+    <li class="list-group-item">Издательство: {{ book.publisher }}</li>
+    <li class="list-group-item">Год: {{ book.year }}</li>
+    <li class="list-group-item">Категория: {{ book.category }}</li>
+    <li class="list-group-item">Доступно: {{ book.available }}</li>
+</ul>
+
+{% if user.is_authenticated %}
+<a href="/borrow/{{ book.isbn }}/" class="btn btn-success">
+    Взять книгу
+</a>
+{% endif %}
+
+<a href="/" class="btn btn-secondary mt-2">Назад</a>
+
+</div>
+
+{% endblock %}
