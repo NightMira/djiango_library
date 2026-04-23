@@ -2,30 +2,47 @@
 
 {% block content %}
 
-<h2>Личный кабинет</h2>
+<div class="card p-4 shadow-sm">
 
-<p>ФИО: {{ user.full_name }}</p>
-<p>Логин: {{ user.username }}</p>
-<p>Email: {{ user.email }}</p>
-<p>Телефон: {{ user.phone }}</p>
-<p>Роль: {{ user.role }}</p>
-<p>Дата регистрации: {{ user.date_reg }}</p>
+<h2 class="mb-3">Личный кабинет</h2>
 
-<h4>Мои книги</h4>
+<hr>
 
-<table class="table table-striped">
-<tr>
-    <th>Книга</th>
-    <th>Срок возврата</th>
-</tr>
+<p><b>ФИО:</b> {{ user.full_name }}</p>
+<p><b>Логин:</b> {{ user.username }}</p>
+<p><b>Email:</b> {{ user.email }}</p>
+<p><b>Телефон:</b> {{ user.phone|default:"Не указан" }}</p>
+<p><b>Роль:</b> {{ user.role }}</p>
+<p><b>Дата регистрации:</b> {{ user.date_reg|date:"d.m.Y H:i" }}</p>
 
-{% for loan in loans %}
-<tr>
-    <td>{{ loan.book.title }}</td>
-    <td>{{ loan.due_date }}</td>
-</tr>
-{% endfor %}
+<hr>
+
+<h4>📚 Мои книги</h4>
+
+{% if loans %}
+<table class="table table-striped mt-3">
+
+    <thead>
+        <tr>
+            <th>Книга</th>
+            <th>Срок возврата</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for loan in loans %}
+        <tr>
+            <td>{{ loan.book.title }}</td>
+            <td>{{ loan.due_date|date:"d.m.Y" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 
 </table>
+{% else %}
+    <p class="text-muted mt-3">У вас пока нет взятых книг</p>
+{% endif %}
+
+</div>
 
 {% endblock %}
