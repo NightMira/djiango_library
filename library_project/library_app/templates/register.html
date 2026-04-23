@@ -1,7 +1,56 @@
-<h2>Регистрация</h2>
+{% extends "base.html" %}
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Создать аккаунт</button>
-</form>
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-5">
+
+        <div class="card p-4 shadow-sm">
+
+            <h2 class="mb-3">Регистрация</h2>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-2">
+                    {{ form.full_name.label }}
+                    {{ form.full_name }}
+                </div>
+
+                <div class="mb-2">
+                    {{ form.username.label }}
+                    {{ form.username }}
+                </div>
+
+                <div class="mb-2">
+                    {{ form.email.label }}
+                    {{ form.email }}
+                </div>
+
+                <div class="mb-2">
+                    {{ form.phone.label }}
+                    {{ form.phone }}
+                </div>
+
+                <div class="mb-2">
+                    {{ form.password1.label }}
+                    {{ form.password1 }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.password2.label }}
+                    {{ form.password2 }}
+                </div>
+
+                <button class="btn btn-primary w-100" type="submit">
+                    Создать аккаунт
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

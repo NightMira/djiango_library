@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Author, Publisher, Category, Book, Member, Staff, Loan
+from .models import Author, Publisher, Category, Book, Loan, User
+
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("id", "username", "full_name", "email", "role", "phone", "date_reg")
+    search_fields = ("username", "full_name", "email")
+    list_filter = ("role",)
 
 
 @admin.register(Author)
@@ -26,18 +33,7 @@ class BookAdmin(admin.ModelAdmin):
     list_filter = ("category", "author")
 
 
-@admin.register(Member)
-class MemberAdmin(admin.ModelAdmin):
-    list_display = ("id", "full_name", "email")
-    search_fields = ("full_name", "email")
-
-
-@admin.register(Staff)
-class StaffAdmin(admin.ModelAdmin):
-    list_display = ("id", "full_name", "role")
-
-
 @admin.register(Loan)
 class LoanAdmin(admin.ModelAdmin):
-    list_display = ("id", "book", "member", "issue_date", "due_date", "return_date")
+    list_display = ("id", "book", "user", "issue_date", "due_date", "return_date")
     list_filter = ("issue_date",)

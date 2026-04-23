@@ -7,12 +7,12 @@
 
 <div class="card p-4 shadow-sm">
 
-<<h2>Вход</h2>
+<h2>Вход</h2>
 
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
-  <button type="submit">Войти</button>
+  <button class="btn btn-primary w-100" type="submit">Войти</button>
 </form>
 
 {% if error %}

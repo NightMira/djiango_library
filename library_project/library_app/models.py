@@ -1,10 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
+
+# =====================
+# USER (ЕДИНАЯ СИСТЕМА)
+# =====================
 class User(AbstractUser):
-    username = models.CharField(max_length=150, unique=True)  # login
-    email = models.EmailField(unique=True)
-
     full_name = models.CharField(max_length=150)
     phone = models.CharField(max_length=20, blank=True)
 
@@ -18,6 +19,10 @@ class User(AbstractUser):
 
     date_reg = models.DateTimeField(auto_now_add=True)
 
+
+# =====================
+# AUTHORS
+# =====================
 class Author(models.Model):
     full_name = models.CharField(max_length=150)
     biography = models.TextField(blank=True, null=True)
@@ -26,6 +31,9 @@ class Author(models.Model):
         return self.full_name
 
 
+# =====================
+# PUBLISHERS
+# =====================
 class Publisher(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=200, blank=True, null=True)
@@ -34,6 +42,9 @@ class Publisher(models.Model):
         return self.name
 
 
+# =====================
+# CATEGORIES
+# =====================
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -41,6 +52,9 @@ class Category(models.Model):
         return self.name
 
 
+# =====================
+# BOOKS
+# =====================
 class Book(models.Model):
     isbn = models.CharField(max_length=20, primary_key=True)
     title = models.CharField(max_length=255)
@@ -56,31 +70,17 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
-# class Member(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     full_name = models.CharField(max_length=150)
-#     address = models.CharField(max_length=200, blank=True)
-#     phone = models.CharField(max_length=20, blank=True)
-#     registration_date = models.DateField(auto_now_add=True)
 
-
-# class Staff(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-#     full_name = models.CharField(max_length=150)
-#     role = models.CharField(max_length=50)
-
-#     def __str__(self):
-#         return self.full_name
-
-
+# =====================
+# LOANS (ВЫДАЧИ)
+# =====================
 class Loan(models.Model):
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    staff = models.ForeignKey(Staff, on_delete=models.SET_NULL, null=True)
 
     issue_date = models.DateField(auto_now_add=True)
     due_date = models.DateField()
     return_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.book} → {self.member}"
+        return f"{self.book} → {self.user}"

@@ -10,7 +10,7 @@
 
 <form method="post" action="/librarian/issue/">
     {% csrf_token %}
-    <input name="member_id" class="form-control mb-2" placeholder="ID читателя">
+    <input name="user_id" class="form-control mb-2" placeholder="ID пользователя">
     <input name="isbn" class="form-control mb-2" placeholder="ISBN книги">
     <button class="btn btn-success">Выдать</button>
 </form>
@@ -31,7 +31,7 @@
 {% for loan in loans %}
 <tr>
     <td>{{ loan.book.title }}</td>
-    <td>{{ loan.member.full_name }}</td>
+    <td>{{ loan.user.full_name }}</td>
     <td>{{ loan.due_date }}</td>
     <td>{{ loan.return_date|default:"—" }}</td>
     <td>
